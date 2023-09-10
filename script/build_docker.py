@@ -17,7 +17,9 @@ logging.basicConfig(
 
 root_path=os.path.abspath(".")
 
-VERSION="0.0.1"
-
 logging.info(f"Root path of repository: {root_path}")
+
+with open(root_path + "/VERSION") as f:
+    VERSION = f.read()
+
 logging.info(f"Start creating docker image of VarvarVPN with version {VERSION}...")
