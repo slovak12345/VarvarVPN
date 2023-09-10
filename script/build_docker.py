@@ -1,6 +1,7 @@
 import os
 import logging
 
+docker_name="VarvarVPN"
 try:
     os.mkdir("logs")
 except:
@@ -23,3 +24,9 @@ with open(root_path + "/VERSION") as f:
     VERSION = f.read()
 
 logging.info(f"Start creating docker image of VarvarVPN with version {VERSION}...")
+
+os.system(f"docker build -f {root_path + "/Dockerfile"} -t {docker_name}:{VERSION} .")
+
+logging.info(f"Finished build docker image {docker_name}:{VERSION}:")
+
+os.system(f"docker image ls | grep {docker_name}")
