@@ -1,0 +1,26 @@
+version: "3"
+services:
+  develop:
+    cap_add:
+      - SYS_PTRACE
+    build:
+     context: ./docker/develop/
+     dockerfile: docker/develop/Dockerfile
+    volumes:
+      - nfsmount: ${CONTAINER_PATH} 
+      - ~/.ssh: ${CONTAINER_PATH}/.ssh
+    ports:
+      - "8080:80"
+      - "8433:433"
+  release:
+    build:
+      context: ./docker/release
+      dockerfile: docker/release/Dockerfile
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${MOUNT_PATH}"
+
