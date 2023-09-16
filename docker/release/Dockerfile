@@ -10,10 +10,10 @@ COPY Makefile /home/varvarvpn
 
 RUN chown varvarvpn:varvarvpn -R src
 
-COPY docker/docker-entrypoint.sh .
+COPY docker-entrypoint.sh .
 RUN chmod 755 /docker-entrypoint.sh
 
 WORKDIR /home/varvarvpn
 USER varvarvpn
 
-ENTRYPOINT [ "docker-entrypoint.sh" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]

@@ -1,26 +1,33 @@
-version: "3"
+version: "3.7"
+
 services:
-  develop:
+  varvar_vpn_develop:
     cap_add:
       - SYS_PTRACE
     build:
      context: ./docker/develop/
-     dockerfile: docker/develop/Dockerfile
+     dockerfile: /home/slave/Documents/VarvarVPN/docker/develop/Dockerfile
     volumes:
-      - nfsmount: ${CONTAINER_PATH} 
-      - ~/.ssh: ${CONTAINER_PATH}/.ssh
+      - nfsmount:/home/varvarvp 
+      - ~/.ssh:/home/varvarvp/.ssh
     ports:
       - "8080:80"
       - "8433:433"
-  release:
+  
+  varvar_vpn_release:
     build:
       context: ./docker/release
-      dockerfile: docker/release/Dockerfile
+      dockerfile: /home/slave/Documents/VarvarVPN/docker/release/Dockerfile
+
 volumes:
   nfsmount:
     driver: local
     driver_opts:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
-      device: ":${MOUNT_PATH}"
+      device: ":/home/slave/Documents/VarvarVPN"
+networks:
+  default:
+    external:
+      name: bridge-default
 
