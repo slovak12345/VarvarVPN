@@ -8,8 +8,8 @@ services:
      context: ./docker/develop/
      dockerfile: /home/slave/Documents/VarvarVPN/docker/develop/Dockerfile
     volumes:
-      - nfsmount:/home/varvarvp 
-      - ~/.ssh:/home/varvarvp/.ssh
+      - nfsmount:/home/varvarvpn/ 
+      - ~/.ssh:/home/varvarvpn/.ssh
     ports:
       - "8080:80"
       - "8433:433"
@@ -24,8 +24,8 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
-      device: ":/home/slave/Documents/VarvarVPN"
+      o: bind
+      device: /home/slave/Documents/VarvarVPN
 networks:
   default:
     external:
